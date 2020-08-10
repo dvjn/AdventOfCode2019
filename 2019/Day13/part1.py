@@ -1,3 +1,4 @@
+import sys
 from collections import defaultdict
 from itertools import islice
 
@@ -153,7 +154,11 @@ def play_game(intcode):
     print(sum(pixel == 2 for pixel in screen.values()))
 
 
-if __name__ == "__main__":
-    with open("input", "r") as intcode_file:
+def main():
+    with open(sys.argv[1], "r") as intcode_file:
         intcode = [int(code) for code in intcode_file.read().split(",")]
         play_game(intcode)
+
+
+if __name__ == "__main__":
+    main()

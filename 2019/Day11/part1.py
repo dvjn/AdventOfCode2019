@@ -1,3 +1,4 @@
+import sys
 from collections import defaultdict
 
 opcode_map = {
@@ -141,8 +142,12 @@ def paint_panel(intcode, panel):
     return panel
 
 
-if __name__ == "__main__":
-    with open("input", "r") as intcode_file:
+def main():
+    with open(sys.argv[1], "r") as intcode_file:
         intcode = [int(code) for code in intcode_file.read().split(",")]
         panel = defaultdict(int)
         print(len(paint_panel(intcode, panel)))
+
+
+if __name__ == "__main__":
+    main()

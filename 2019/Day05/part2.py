@@ -1,3 +1,4 @@
+import sys
 from part1 import run_intcode, opcode_map
 
 new_opcodes = {
@@ -25,7 +26,12 @@ new_opcodes = {
 
 opcode_map.update(new_opcodes)
 
-if __name__ == "__main__":
-    with open("input", "r") as intcode_file:
+
+def main():
+    with open(sys.argv[1], "r") as intcode_file:
         intcode = [int(code) for code in intcode_file.read().split(",")]
         run_intcode(intcode, opcode_map)
+
+
+if __name__ == "__main__":
+    main()

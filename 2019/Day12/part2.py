@@ -1,3 +1,4 @@
+import sys
 from functools import reduce
 from part1 import Moon, increment_time_step
 
@@ -19,8 +20,8 @@ def compute_lcm(x, y):
     return lcm
 
 
-if __name__ == "__main__":
-    with open("input", "r") as initial_positions_file:
+def main():
+    with open(sys.argv[1], "r") as initial_positions_file:
         moons = list(
             Moon.from_position_str(initial_position.strip())
             for initial_position in initial_positions_file
@@ -45,3 +46,7 @@ if __name__ == "__main__":
                     axes_periodicity[axis] = i
 
         print(reduce(compute_lcm, axes_periodicity.values()))
+
+
+if __name__ == "__main__":
+    main()

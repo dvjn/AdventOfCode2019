@@ -1,3 +1,4 @@
+import sys
 from math import degrees, atan2
 from collections import namedtuple
 
@@ -57,9 +58,13 @@ def load_asteroids(space_map):
     return asteroids
 
 
-if __name__ == "__main__":
-    with open("input", "r") as input_file:
+def main():
+    with open(sys.argv[1], "r") as input_file:
         space_map = input_file.read().strip().split("\n")
         asteroids = load_asteroids(space_map)
         best_asteroid = find_best_asteroid(asteroids)
         print(best_asteroid.num_visible_asteroids)
+
+
+if __name__ == "__main__":
+    main()

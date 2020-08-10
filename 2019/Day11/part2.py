@@ -1,3 +1,4 @@
+import sys
 from collections import defaultdict
 from part1 import paint_panel
 
@@ -35,10 +36,14 @@ def draw_image(image):
     print(processed_image)
 
 
-if __name__ == "__main__":
-    with open("input", "r") as intcode_file:
+def main():
+    with open(sys.argv[1], "r") as intcode_file:
         intcode = [int(code) for code in intcode_file.read().split(",")]
         panel = defaultdict(lambda: 1)
         panel = paint_panel(intcode, panel)
         image = parse_image(panel)
         draw_image(image)
+
+
+if __name__ == "__main__":
+    main()

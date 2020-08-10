@@ -1,3 +1,6 @@
+import sys
+
+
 def get_pixel(i, layers):
     for layer in layers:
         if layer[i] != "2":
@@ -12,8 +15,8 @@ def draw_image(image):
     print(processed_image)
 
 
-if __name__ == "__main__":
-    with open("input", "r") as input_file:
+def main():
+    with open(sys.argv[1], "r") as input_file:
         data = input_file.read().strip()
         pixels_in_layer = 25 * 6
         layers = []
@@ -22,3 +25,7 @@ if __name__ == "__main__":
         image_pixels = [get_pixel(i, layers) for i in range(pixels_in_layer)]
         image = [image_pixels[i : i + 25] for i in range(0, pixels_in_layer, 25)]
         draw_image(image)
+
+
+if __name__ == "__main__":
+    main()

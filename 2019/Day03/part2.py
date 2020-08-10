@@ -1,3 +1,4 @@
+import sys
 from part1 import Cell, get_visited_cells, get_intersections
 
 
@@ -34,6 +35,11 @@ def get_min_steps(wires):
     return min(sum(steps) for steps in steps_to_intersection_map)
 
 
-with open("input", "r") as input_file:
-    wires = [wire.split(",") for wire in input_file]
-    print(get_min_steps(wires))
+def main():
+    with open(sys.argv[1], "r") as input_file:
+        wires = [wire.split(",") for wire in input_file]
+        print(get_min_steps(wires))
+
+
+if __name__ == "__main__":
+    main()

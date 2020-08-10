@@ -1,9 +1,11 @@
+import sys
 from itertools import product
 
 from part1 import run_intcode
 
-if __name__ == "__main__":
-    with open("input", "r") as intcode_file:
+
+def main():
+    with open(sys.argv[1], "r") as intcode_file:
         intcode = [int(code) for code in intcode_file.read().split(",")]
 
         for noun, verb in product(range(100), range(100)):
@@ -12,3 +14,7 @@ if __name__ == "__main__":
             if run_intcode(intcode) == 19690720:
                 print(100 * noun + verb)
                 break
+
+
+if __name__ == "__main__":
+    main()

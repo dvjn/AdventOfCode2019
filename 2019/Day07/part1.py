@@ -1,3 +1,4 @@
+import sys
 from itertools import permutations
 
 opcode_map = {
@@ -89,8 +90,8 @@ def run_intcode(intcode, opcode_map=opcode_map, debug=False):
     return memory["intcode"][0]
 
 
-if __name__ == "__main__":
-    with open("input", "r") as intcode_file:
+def main():
+    with open(sys.argv[1], "r") as intcode_file:
         intcode = [int(code) for code in intcode_file.read().split(",")]
         max_signal = 0
         for sequence in permutations(range(5)):
@@ -103,3 +104,7 @@ if __name__ == "__main__":
             if last_output > max_signal:
                 max_signal = last_output
         print(max_signal)
+
+
+if __name__ == "__main__":
+    main()

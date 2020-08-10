@@ -1,3 +1,4 @@
+import sys
 from dataclasses import dataclass
 from itertools import combinations
 from parse import parse  # pip install parse
@@ -58,8 +59,8 @@ def increment_time_step(moons):
         moon.position += moon.velocity
 
 
-if __name__ == "__main__":
-    with open("input", "r") as initial_positions_file:
+def main():
+    with open(sys.argv[1], "r") as initial_positions_file:
         moons = list(
             Moon.from_position_str(initial_position.strip())
             for initial_position in initial_positions_file
@@ -68,3 +69,7 @@ if __name__ == "__main__":
             increment_time_step(moons)
 
         print(sum(moon.total_energy for moon in moons))
+
+
+if __name__ == "__main__":
+    main()

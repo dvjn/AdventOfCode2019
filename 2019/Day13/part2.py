@@ -1,3 +1,4 @@
+import sys
 from collections import defaultdict
 import os
 
@@ -195,8 +196,12 @@ def play_game(intcode):
     run_intcode(intcode, joystick, mux_output)
 
 
-if __name__ == "__main__":
-    with open("input", "r") as intcode_file:
+def main():
+    with open(sys.argv[1], "r") as intcode_file:
         intcode = [int(code) for code in intcode_file.read().split(",")]
         intcode[0] = 2
         play_game(intcode)
+
+
+if __name__ == "__main__":
+    main()

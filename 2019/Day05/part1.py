@@ -1,3 +1,5 @@
+import sys
+
 opcode_map = {
     1: {
         "name": "add",
@@ -47,7 +49,11 @@ def run_intcode(intcode, opcode_map=opcode_map, debug=False):
     return memory["intcode"][0]
 
 
-if __name__ == "__main__":
-    with open("input", "r") as intcode_file:
+def main():
+    with open(sys.argv[1], "r") as intcode_file:
         intcode = [int(code) for code in intcode_file.read().split(",")]
         run_intcode(intcode)
+
+
+if __name__ == "__main__":
+    main()

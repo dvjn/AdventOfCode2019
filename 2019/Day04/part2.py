@@ -1,3 +1,6 @@
+import sys
+
+
 def is_valid_password(number):
     number_str = "0" + str(number) + "a"
     same_adjacent_digits = False
@@ -16,14 +19,19 @@ def is_valid_password(number):
     return same_adjacent_digits
 
 
-with open("input", "r") as input_file:
-    lower, upper = map(int, input_file.read().split("-"))
+def main():
+    with open(sys.argv[1], "r") as input_file:
+        lower, upper = map(int, input_file.read().split("-"))
 
-    possibilities = 0
-    number = lower
-    while number <= upper:
-        if is_valid_password(number):
-            possibilities += 1
-        number += 1
+        possibilities = 0
+        number = lower
+        while number <= upper:
+            if is_valid_password(number):
+                possibilities += 1
+            number += 1
 
-    print(possibilities)
+        print(possibilities)
+
+
+if __name__ == "__main__":
+    main()

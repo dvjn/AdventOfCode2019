@@ -1,5 +1,8 @@
-if __name__ == "__main__":
-    with open("input", "r") as input_file:
+import sys
+
+
+def main():
+    with open(sys.argv[1], "r") as input_file:
         data = input_file.read().strip()
         pixels_in_layer = 25 * 6
         best_layer = ""
@@ -13,3 +16,7 @@ if __name__ == "__main__":
         ones = best_layer.count("1")
         twos = best_layer.count("2")
         print(ones * twos)
+
+
+if __name__ == "__main__":
+    main()

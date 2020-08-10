@@ -1,3 +1,6 @@
+import sys
+
+
 def run_intcode(intcode):
     intcode = intcode[:]
     for i in range(0, len(intcode), 4):
@@ -10,8 +13,12 @@ def run_intcode(intcode):
     return intcode[0]
 
 
-if __name__ == "__main__":
-    with open("input", "r") as intcode_file:
+def main():
+    with open(sys.argv[1], "r") as intcode_file:
         intcode = [int(code) for code in intcode_file.read().split(",")]
         intcode[1:3] = 12, 2
         print(run_intcode(intcode))
+
+
+if __name__ == "__main__":
+    main()

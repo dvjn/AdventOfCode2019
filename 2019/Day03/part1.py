@@ -1,3 +1,4 @@
+import sys
 from collections import defaultdict, namedtuple
 
 
@@ -36,9 +37,13 @@ def get_distance(cell1, cell2=Cell(0, 0)):
     return abs(cell1.x - cell2.x) + abs(cell1.y + cell2.y)
 
 
-if __name__ == "__main__":
-    with open("input", "r") as input_file:
+def main():
+    with open(sys.argv[1], "r") as input_file:
         wires = [wire.split(",") for wire in input_file]
         intersections = get_intersections(wires)
         closest_intersection = min(intersections, key=get_distance)
         print(get_distance(closest_intersection))
+
+
+if __name__ == "__main__":
+    main()
