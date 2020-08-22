@@ -164,34 +164,35 @@ class ScoreBoard:
         self.score = score
 
 
+def make_joystick(monitor):
+    while True:
+        ball_x = next(
+            (coords[0] for coords, value in monitor.screen.items() if value == 4)
+        )
+        paddle_x = next(
+            (coords[0] for coords, value in monitor.screen.items() if value == 3)
+        )
+        yield 0 if ball_x == paddle_x else -1 if ball_x < paddle_x else 1
+
+
+def make_mux_output(monitor, score_board):
+    while True:
+        x = yield
+        y = yield
+        z = yield
+        if x == -1 and y == 0:
+            score_board.set_score(z)
+        else:
+            monitor.set_pixel(x, y, z)
+        monitor.show()
+        score_board.show()
+
+
 def play_game(intcode):
     monitor = Monitor()
     score_board = ScoreBoard()
-
-    def make_joystick():
-        while True:
-            ball_x = next(
-                (coords[0] for coords, value in monitor.screen.items() if value == 4)
-            )
-            paddle_x = next(
-                (coords[0] for coords, value in monitor.screen.items() if value == 3)
-            )
-            yield 0 if ball_x == paddle_x else -1 if ball_x < paddle_x else 1
-
-    def make_mux_output():
-        while True:
-            x = yield
-            y = yield
-            z = yield
-            if x == -1 and y == 0:
-                score_board.set_score(z)
-            else:
-                monitor.set_pixel(x, y, z)
-            monitor.show()
-            score_board.show()
-
-    joystick = make_joystick()
-    mux_output = make_mux_output()
+    joystick = make_joystick(monitor)
+    mux_output = make_mux_output(monitor, score_board)
     next(mux_output)
     run_intcode(intcode, joystick, mux_output)
 
