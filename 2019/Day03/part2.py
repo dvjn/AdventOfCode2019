@@ -1,5 +1,6 @@
 import sys
-from part1 import Cell, get_visited_cells, get_intersections
+
+from part1 import Cell, get_intersections, get_visited_cells
 
 
 def get_min_steps(wires):

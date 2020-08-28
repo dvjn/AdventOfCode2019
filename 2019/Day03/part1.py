@@ -1,7 +1,6 @@
 import sys
 from collections import defaultdict, namedtuple
 
-
 Cell = namedtuple("Cell", ["x", "y"])
 
 move_map = {"R": Cell(1, 0), "L": Cell(-1, 0), "U": Cell(0, 1), "D": Cell(0, -1)}

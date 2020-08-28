@@ -1,7 +1,8 @@
 import sys
-from dataclasses import dataclass
 from collections import defaultdict
+from dataclasses import dataclass
 from math import ceil
+
 from parse import parse  # pip install parse
 
 

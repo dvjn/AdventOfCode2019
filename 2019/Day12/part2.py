@@ -1,5 +1,6 @@
 import sys
 from functools import reduce
+
 from part1 import Moon, increment_time_step
 
 axes = ("x", "y", "z")

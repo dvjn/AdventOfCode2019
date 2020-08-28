@@ -1,6 +1,6 @@
+import os
 import sys
 from collections import defaultdict
-import os
 
 
 def cls():

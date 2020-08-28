@@ -5,7 +5,6 @@ from dataclasses import dataclass
 
 from intcode import run_intcode
 
-
 UNEXPLORED = 0
 DROID = 1
 EMPTY = 2

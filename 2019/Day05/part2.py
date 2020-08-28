@@ -1,5 +1,6 @@
 import sys
-from part1 import run_intcode, opcode_map
+
+from part1 import opcode_map, run_intcode
 
 new_opcodes = {
     5: {

@@ -1,5 +1,6 @@
 import sys
-from part1 import load_asteroids, find_best_asteroid
+
+from part1 import find_best_asteroid, load_asteroids
 
 
 def main():

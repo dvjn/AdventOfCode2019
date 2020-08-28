@@ -1,4 +1,5 @@
 import sys
+
 from part1 import calculate_fuel_requirement
 
 

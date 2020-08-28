@@ -1,6 +1,7 @@
 import sys
 from math import ceil
-from part1 import parse_reactions, get_ore_requirements
+
+from part1 import get_ore_requirements, parse_reactions
 
 
 def main():

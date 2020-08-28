@@ -1,5 +1,6 @@
 import sys
 from collections import defaultdict
+
 from part1 import paint_panel
 
 

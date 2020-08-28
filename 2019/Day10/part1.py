@@ -1,6 +1,6 @@
 import sys
-from math import degrees, atan2
 from collections import namedtuple
+from math import atan2, degrees
 
 VisibleAsteroid = namedtuple("VisibleAsteroid", ["sq_distance", "asteroid"])
 

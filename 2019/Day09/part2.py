@@ -1,4 +1,5 @@
 import sys
+
 from part1 import run_intcode
 
 
