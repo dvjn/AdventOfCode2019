@@ -1,53 +1,72 @@
 from collections import defaultdict
 
+
+def add_op(memory):
+    memory["intcode"][memory["params"][2]] = (
+        memory["intcode"][memory["params"][0]] + memory["intcode"][memory["params"][1]]
+    )
+    return memory
+
+
+def mul_op(memory):
+    memory["intcode"][memory["params"][2]] = (
+        memory["intcode"][memory["params"][0]] * memory["intcode"][memory["params"][1]]
+    )
+    return memory
+
+
+def in_op(memory):
+    memory["intcode"][memory["params"][0]] = memory["input_buffer"]
+    del memory["input_buffer"]
+    return memory
+
+
+def out_op(memory):
+    memory["output_buffer"] = memory["intcode"][memory["params"][0]]
+    return memory
+
+
+def jump_if_true_op(memory):
+    if memory["intcode"][memory["params"][0]] != 0:
+        memory["ip"] = memory["intcode"][memory["params"][1]] - 3
+    return memory
+
+
+def jump_if_false_op(memory):
+    if memory["intcode"][memory["params"][0]] == 0:
+        memory["ip"] = memory["intcode"][memory["params"][1]] - 3
+    return memory
+
+
+def less_than_op(memory):
+    memory["intcode"][memory["params"][2]] = (
+        memory["intcode"][memory["params"][0]] < memory["intcode"][memory["params"][1]]
+    )
+    return memory
+
+
+def equals_op(memory):
+    memory["intcode"][memory["params"][2]] = (
+        memory["intcode"][memory["params"][0]] == memory["intcode"][memory["params"][1]]
+    )
+    return memory
+
+
+def change_relative_base_op(memory):
+    memory["relative_base"] += int(memory["intcode"][memory["params"][0]])
+    return memory
+
+
 opcode_map = {
-    1: {
-        "name": "add",
-        "length": 4,
-        "macro": "intcode[params[2]] = intcode[params[0]] + intcode[params[1]]",
-    },
-    2: {
-        "name": "mul",
-        "length": 4,
-        "macro": "intcode[params[2]] = intcode[params[0]] * intcode[params[1]]",
-    },
-    3: {
-        "name": "in",
-        "length": 2,
-        "macro": "intcode[params[0]] = int(input_buffer); del input_buffer",
-        "requires_input": True,
-    },
-    4: {
-        "name": "out",
-        "length": 2,
-        "macro": "output_buffer = intcode[params[0]]",
-        "gives_output": True,
-    },
-    5: {
-        "name": "jump-if-true",
-        "length": 3,
-        "macro": "if intcode[params[0]] != 0: ip = intcode[params[1]] - 3",
-    },
-    6: {
-        "name": "jump-if-false",
-        "length": 3,
-        "macro": "if intcode[params[0]] == 0: ip = intcode[params[1]] - 3",
-    },
-    7: {
-        "name": "less-than",
-        "length": 4,
-        "macro": "intcode[params[2]] = int(intcode[params[0]] < intcode[params[1]])",
-    },
-    8: {
-        "name": "equals",
-        "length": 4,
-        "macro": "intcode[params[2]] = int(intcode[params[0]] == intcode[params[1]])",
-    },
-    9: {
-        "name": "change-relative-base",
-        "length": 2,
-        "macro": "relative_base += int(intcode[params[0]])",
-    },
+    1: {"name": "add", "length": 4, "macro": add_op},
+    2: {"name": "mul", "length": 4, "macro": mul_op},
+    3: {"name": "in", "length": 2, "macro": in_op, "requires_input": True},
+    4: {"name": "out", "length": 2, "macro": out_op, "gives_output": True},
+    5: {"name": "jump-if-true", "length": 3, "macro": jump_if_true_op},
+    6: {"name": "jump-if-false", "length": 3, "macro": jump_if_false_op},
+    7: {"name": "less-than", "length": 4, "macro": less_than_op},
+    8: {"name": "equals", "length": 4, "macro": equals_op},
+    9: {"name": "change-relative-base", "length": 2, "macro": change_relative_base_op},
 }
 
 
@@ -81,7 +100,8 @@ def run_intcode(intcode, opcode_map=opcode_map, debug=False):
             for j in range(memory["n_params"])
         )
         if opcode_map[memory["opcode"]].get("requires_input", False):
-            memory["input_buffer"] = yield
+            input_buffer = yield
+            memory["input_buffer"] = int(input_buffer)
         if debug:
             print()
             print("Opcode:", memory["full_opcode"])
@@ -93,13 +113,12 @@ def run_intcode(intcode, opcode_map=opcode_map, debug=False):
             )
             if "input_buffer" in memory:
                 print("Input Buffer:", memory["input_buffer"])
-        exec(opcode_map[memory["opcode"]]["macro"], None, memory)
+        memory = opcode_map[memory["opcode"]]["macro"](memory)
         if opcode_map[memory["opcode"]].get("gives_output", False):
+            if debug:
+                print("Output Buffer:", memory["output_buffer"])
             yield memory["output_buffer"]
             del memory["output_buffer"]
-        if debug:
-            if "output_buffer" in memory:
-                print("Output Buffer:", memory["output_buffer"])
         memory["ip"] += opcode_map[memory["opcode"]]["length"]
         if debug:
             print("Next IP:", memory["ip"])
